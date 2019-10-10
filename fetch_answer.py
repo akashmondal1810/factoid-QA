@@ -8,7 +8,6 @@ from gensim.models.keyedvectors import KeyedVectors
 from word2vec_repo.DocSim import DocSim
 from nltk.corpus import stopwords
 
-#some of the code are from https://stackoverflow.com/a/8897648 and https://github.com/v1shwa/document-similarity/blob/master/example.py
 
 model_path = 'word2vec_repo/model.bin'
 stopwords = stopwords.words('english')
