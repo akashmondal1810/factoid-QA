@@ -4,7 +4,7 @@ from fetch_answer import *
 
 #https://stackoverflow.com/a/55943748
 main = Tk()
-main.title('CALCULATOR')
+main.title('Factoid-QA System')
 def tfidf():
     blank.delete(0, END)
     qu = str(num1.get())
@@ -24,7 +24,7 @@ def clear():
 
 
 main.geometry('500x500')
-Label(main, text = "Enter Num 1:").grid(row=0)
+Label(main, text = "Enter Your Qestion:").grid(row=0)
 Label(main, text = "The Answer is:").grid(row=1)
 
 
