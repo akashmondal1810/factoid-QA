@@ -19,7 +19,6 @@ class DocSim(object):
                 pass
 
         # Assuming that document vector is the mean of all the word vectors
-        # PS: There are other & better ways to do it.
         vector = np.mean(word_vecs, axis=0)
         return vector
 
