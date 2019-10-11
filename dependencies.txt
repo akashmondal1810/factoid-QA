@@ -1,9 +1,6 @@
 nltk
 numpy
 pandas
-re
-pickle
 sklearn
 gensim
-tkinter
-json
+tk-tools
