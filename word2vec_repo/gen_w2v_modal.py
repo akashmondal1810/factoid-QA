@@ -74,7 +74,7 @@ for i in df['sentence']:
     
 #print("Data format for the overall list:",bigger_list)
 #custom data is fed to machine for further processing
-model = Word2Vec(bigger_list, min_count=1,size=300,workers=4)
+model = Word2Vec(bigger_list, min_count=1,size=300,window=4)
 #print(model)
 
 model.save("word2vec.model")
