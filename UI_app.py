@@ -19,7 +19,6 @@ def w2v():
     blank.insert(0, Ans)
 def clear():
     blank.delete(0, END)
-    num2.delete(0, END)
     num1.delete(0, END)
 
 
