@@ -1,5 +1,8 @@
 import numpy as np
+from nltk.stem import PorterStemmer
+ps = PorterStemmer()
 
+#some of the code are from https://stackoverflow.com/a/50832787
 class DocSim(object):
     def __init__(self, w2v_model , stopwords=[]):
         self.w2v_model = w2v_model
@@ -8,7 +11,7 @@ class DocSim(object):
     def vectorize(self, doc):
         """Identify the vector values for each word in the given document"""
         doc = doc.lower()
-        words = [w for w in doc.split(" ") if w not in self.stopwords]
+        words = [ps.stem(w) for w in doc.split(" ") if w not in self.stopwords]
         word_vecs = []
         for word in words:
             try:
@@ -19,6 +22,7 @@ class DocSim(object):
                 pass
 
         # Assuming that document vector is the mean of all the word vectors
+        # PS: There are other & better ways to do it.
         vector = np.mean(word_vecs, axis=0)
         return vector
 

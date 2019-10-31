@@ -4,3 +4,4 @@ pandas
 sklearn
 gensim
 tk-tools
+pytorch-transformers==1.0.0

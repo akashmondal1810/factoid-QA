@@ -1,13 +1,16 @@
-data_path = '../data'
 import os
 
-directory = os.fsencode(data_path)
+title = "../data"
+folders = [x[0] for x in os.walk(str(os.getcwd())+'/'+title+'/')]
+folders[0] = folders[0][:len(folders[0])-1]
+
+directory = os.fsencode(folders[0])
 fileName_List = []
 for file in os.listdir(directory):
     filename = os.fsdecode(file)
     if filename.endswith(".txt"):
-        print(os.path.join(data_path, filename))
-        fileName_List.append(os.path.join(data_path, filename))
+        print(os.path.join(folders[0], filename))
+        fileName_List.append(os.path.join(folders[0], filename))
         continue
     else:
         continue
@@ -29,6 +32,8 @@ for txt_file in fileName_List:
 
     df = df.append(txt_df, ignore_index=True)
 
-
-df.to_csv('sentence_with_lbl.csv', index=False)
-print("csv file generated from txt file")
+from sklearn.utils import shuffle
+df = shuffle(df)
+df.to_excel('sentence_with_lbl.xlsx', sheet_name='Sheet1')
+#df.to_csv('sentence_with_lbl.csv', index=False)
+print("xlsx file generated from txt file")

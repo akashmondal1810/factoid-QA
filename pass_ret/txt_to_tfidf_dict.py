@@ -139,6 +139,8 @@ for i in range(N):
 
     doc += 1
 
+for i in tf_idf:
+    tf_idf[i] *= alpha
 
 with open("data_dfidf.json","w") as f:
     f.write(json.dumps(list(tf_idf.items())))
