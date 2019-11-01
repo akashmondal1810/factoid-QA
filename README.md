@@ -13,5 +13,6 @@
 - Run `cd word2vec_repo` and `python gen_w2v_modal.py` to generate the word2vec model and then `cd ..`
 
 ## Execute:
+A basic User Interface using Python's Tkinter library is provided .
 - `python UI_app.py` for answer
 - Sample questions - [here](https://github.com/akashmondal1810/factoid-QA/blob/master/documents/Question.csv)
