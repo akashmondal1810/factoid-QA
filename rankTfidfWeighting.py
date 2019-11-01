@@ -17,7 +17,6 @@ import math
 # %load_ext autotime
 
 title = "data"
-alpha = 0.3
 folders = [x[0] for x in os.walk(str(os.getcwd())+'/'+title+'/')]
 folders[0] = folders[0][:len(folders[0])-1]
 
