@@ -17,6 +17,7 @@ import math
 # %load_ext autotime
 
 title = "data"
+alpha = 0.3
 folders = [x[0] for x in os.walk(str(os.getcwd())+'/'+title+'/')]
 folders[0] = folders[0][:len(folders[0])-1]
 
@@ -74,10 +75,14 @@ def stemming(data):
 
 def preprocess(data):
     data = convert_lower_case(data)
-    data = remove_punctuation(data) 
+    data = remove_punctuation(data) #remove comma seperately
     data = remove_apostrophe(data)
     data = remove_stop_words(data)
     data = stemming(data)
+    data = remove_punctuation(data)
+    data = stemming(data) #needed again as we need to stem the words
+    data = remove_punctuation(data) #needed again as num2word is giving few hypens and commas fourty-one
+    data = remove_stop_words(data) #needed again as num2word is giving stop words 101 - one hundred and one
     return data
 
 

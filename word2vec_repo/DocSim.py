@@ -11,7 +11,7 @@ class DocSim(object):
     def vectorize(self, doc):
         """Identify the vector values for each word in the given document"""
         doc = doc.lower()
-        words = [ps.stem(w) for w in doc.split(" ") if w not in self.stopwords]
+        words = [w for w in doc.split(" ") if w not in self.stopwords]
         word_vecs = []
         for word in words:
             try:

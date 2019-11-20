@@ -1,21 +1,24 @@
 from rankTfidfWeighting import matching_score
 from qProcessing_nltk import QpreProcessing
-from rankByclassify import docRank_by_classfication
 from sklearn.feature_extraction.text import TfidfVectorizer
-import nltk
-import os
-import numpy as np
 from gensim.models.keyedvectors import KeyedVectors
 from word2vec_repo.DocSim import DocSim
 from nltk.corpus import stopwords
+import nltk
+import os
+import numpy as np
 
-#some of the code are from https://stackoverflow.com/a/8897648 and https://github.com/v1shwa/document-similarity/blob/master/example.py
+
+#some of the code are from https://stackoverflow.com/a/8897648 
 
 model_path = 'word2vec_repo/model.bin'
 stopwords = stopwords.words('english')
 
 model = KeyedVectors.load(model_path)
 ds = DocSim(model, stopwords=stopwords)
+
+from bert import QA
+model = QA('BERTap/model')
 
 #fetch top 3 doc using tf-idf weighting method(for large corpus set it to 10)
 def get_doc(qu):
@@ -81,14 +84,14 @@ def get_ans_w2v(qu, answer_sent):
 
     sim_scores = ds.calculate_similarity(source_doc, target_docs)
     sorted(sim_scores, key = lambda i: i['score'])
-    return sim_scores[1]['doc']
+    return str(sim_scores[1]['doc']+' Also '+sim_scores[2]['doc'])
 
-from bert import QA
-model = QA('BERTap/model')
+
 def bertAns(q, doc):
     doc = ' '.join([str(elem) for elem in doc])
     answer = model.predict(doc,q)
     return answer['answer']
+
 
 '''
 q = str(input("Question: "))
@@ -96,28 +99,4 @@ ans_lists = get_doc(q)
 print("tf-idf: ", get_answer(q, ans_lists))
 print("----------------------------------")
 print("w2v: ", get_ans_w2v(q, ans_lists))
-
-
-import pandas as pd
-import time
-df = pd.read_csv(r"documents/Question.csv",encoding='latin-1')
-df["ans_tfIdf"]= [get_answer(q, get_doc_tc(q)) for q in df['Question']]
-
-time_tf = []
-for q in df['Question']:
-    start_time = time.time()
-    get_answer(q, get_doc_tc(q))
-    time_tf.append((time.time() - start_time))
-df["exe_time_tfIdf"]= time_tf
-
-df["ans_w2v"]= [get_ans_w2v(q, get_doc_tc(q)) for q in df['Question']]
-
-time_w2v = []
-for q in df['Question']:
-    start_time = time.time()
-    get_ans_w2v(q, get_doc_tc(q))
-    time_w2v.append((time.time() - start_time))
-df["exe_time_w2v"]= time_w2v
-
-df.to_csv('documents/ans_genrtd_mod_docRank.csv', index=False)
 '''

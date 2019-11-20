@@ -2,12 +2,14 @@ import logging
 import pandas as pd
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-from nltk.stem import PorterStemmer
 import gensim.models.word2vec as w2v
 import multiprocessing
 import nltk
 import os
 import numpy as np
+
+from gensim.models import KeyedVectors
+glove_path = "glove6b/glove.6B.300d.txt"
 
 
 title = "../data"
@@ -52,20 +54,10 @@ def remove_punctuation(data):
         data = np.char.replace(data, symbols[i], ' ')
     return data
 
-def stemming(data):
-    stemmer= PorterStemmer()
-    
-    tokens = word_tokenize(str(data))
-    new_text = ""
-    for w in tokens:
-        new_text = new_text + " " + stemmer.stem(w)
-    return new_text
-
 def preprocess(data):
     data = convert_lower_case(data)
     data = remove_punctuation(data) 
     data = remove_stop_words(data)
-    data = stemming(data)
 
     return data
 
@@ -87,19 +79,16 @@ min_word_count = 1
 #more workers, faster we train
 num_workers = multiprocessing.cpu_count()
 
-# Context window length.
-context_size = 7
+# Context window length, yeild best results for our dataset
+context_size = 6
 
 # Downsample setting for frequent words.
-#0 - 1e-5 is good for this
+#tested on 0 - 1e-5 
 downsampling = 1e-3
-
-# Seed for the RNG, to make the results reproducible.
-#random number generator
-#deterministic, good for debugging
 seed = 1
-print('Training starting..')
-cusine2vec = w2v.Word2Vec(
+
+print('Training starting over the weight of glove..')
+food2vec = w2v.Word2Vec(
     sg=1,
     seed=seed,
     workers=num_workers,
@@ -108,10 +97,17 @@ cusine2vec = w2v.Word2Vec(
     window=context_size,
     sample=downsampling
 )
-cusine2vec.build_vocab(bigger_list)
-cusine2vec.train(bigger_list, total_examples=cusine2vec.corpus_count, epochs=cusine2vec.iter)
+food2vec.build_vocab(bigger_list)
+
+total_examples = food2vec.corpus_count
+model = KeyedVectors.load_word2vec_format(glove_path, binary=False)
+
+food2vec.build_vocab([list(model.vocab.keys())], update=True)
+food2vec.intersect_word2vec_format(glove_path, binary=False, lockf=1.0)
+food2vec.train(bigger_list, total_examples=total_examples, epochs=food2vec.iter)
+
 print('Training completed')
-cusine2vec.save("word2vec.model")
-cusine2vec.save("model.bin")
+food2vec.save("word2vec.model")
+food2vec.save("model.bin")
 
 print("modal saved")
