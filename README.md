@@ -9,9 +9,9 @@
     import nltk
     nltk.download('stopwords')
 ```
-- Run `cd processed_data` and `python txt_to_csv.py` to generate the processed dataframe and then `cd ..`
-- Run `cd pass_ret` and `python txt_to_tfidf_dict.py` to generate the tf-idf values over the corpus and then `cd ..`
-- Run `cd word2vec_repo` and `python gen_w2v_modal.py` to generate the word2vec model and then `cd ..`
+- Run `processed_data/python txt_to_csv.py` to generate the processed dataframe
+- Run `cd pass_ret/python txt_to_tfidf_dict.py` to generate the tf-idf values over the corpus
+- Run `cd word2vec_repo/python gen_w2v_modal.py` to generate the word2vec model
 
 ## Execute:
 A basic User Interface using Python's Tkinter library is provided .
