@@ -20,13 +20,14 @@ QAsys
 ├── word2vec_repo   
 │   ├── glove6b
 │   |   └── glove.6B.300d.txt
-│   └── domain2vec.bin  
+│   └── domain2vec.bin (or $TRAINED_W2V_MODEL)
 ├── pass_ret
 │   └── data_tfidf.json
 └── BERTap
         └── model
             ├──bert_config.json
             └── pytorch_model.bin
+                (or $TRAINED_SQuAD_MODEL)
 ```
 
 ## Execute:
