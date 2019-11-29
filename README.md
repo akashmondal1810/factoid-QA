@@ -12,6 +12,22 @@
 - Run `processed_data/txt_to_csv.py` to generate the processed dataframe
 - Run `pass_ret/txt_to_tfidf_dict.py` to generate the tf-idf values over the corpus
 - Run `word2vec_repo/gen_w2v_modal.py` to generate the word2vec model
+### Default directory structure
+```
+QAsys
+├── data (or $QA_Knowledge_DATA)
+|   └── <unique/non overlapping doc name>.txt
+├── word2vec_repo   
+│   ├── glove6b
+│   |   └── glove.6B.300d.txt
+│   └── domain2vec.bin  
+├── pass_ret
+│   └── data_tfidf.json
+└── BERTap
+        └── model
+            ├──bert_config.json
+            └── pytorch_model.bin
+```
 
 ## Execute:
 A basic User Interface using Python's Tkinter library is provided .
